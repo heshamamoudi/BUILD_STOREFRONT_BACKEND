@@ -1,6 +1,6 @@
 import * as express from 'express';
 import { product, productStore } from '../models/products';
-import * as jwt from 'jsonwebtoken'
+import * as jwt from 'jsonwebtoken';
 
 const store = new productStore();
 
@@ -9,23 +9,22 @@ const index = async (req: express.Request, res: express.Response) => {
   res.json(products);
 };
 
-const Show = async (req: express.Request, res: express.Response) => {;
-  const id:number = parseInt(req.params.id)
+const Show = async (req: express.Request, res: express.Response) => {
+  const id: number = parseInt(req.params.id);
   const product = await store.show(id);
   res.json(product);
 };
 
 const Create = async (req: express.Request, res: express.Response) => {
-
-  const data = req.body
+  const data = req.body;
   try {
     jwt.verify(data.token, process.env.TOKEN_SECRET);
   } catch (error) {
     res.status(401);
-     res.json(`invalid token ${error}`);
-     return
+    res.json(`invalid token ${error}`);
+    return;
   }
-  
+
   const Product: product = {
     name: data.name,
     price: data.price

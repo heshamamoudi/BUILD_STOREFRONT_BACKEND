@@ -2,43 +2,42 @@ import * as express from 'express';
 import { orderStore, order } from '../models/orders';
 import * as jwt from 'jsonwebtoken';
 
-
 const store = new orderStore();
 
 const index = async (req: express.Request, res: express.Response) => {
-  const data = req.body
+  const data = req.body;
   try {
     jwt.verify(data.token, process.env.TOKEN_SECRET);
   } catch (error) {
     res.status(401);
-     res.json(`invalid token ${error}`);
-     return
+    res.json(`invalid token ${error}`);
+    return;
   }
   const order = await store.index();
   res.json(order);
 };
 
 const Show = async (req: express.Request, res: express.Response) => {
-  const data = req.body
+  const data = req.body;
   try {
     jwt.verify(data.token, process.env.TOKEN_SECRET);
   } catch (error) {
     res.status(401);
     res.json(`invalid token ${error}`);
-     return
+    return;
   }
   const order = await store.show(req.params.id);
   res.json(order);
 };
 
 const Create = async (req: express.Request, res: express.Response) => {
-  const data = req.body
+  const data = req.body;
   try {
     jwt.verify(data.token, process.env.TOKEN_SECRET);
   } catch (error) {
     res.status(401);
     res.json(`invalid token ${error}`);
-     return
+    return;
   }
   const order: order = {
     status: data.status,
@@ -54,18 +53,18 @@ const Create = async (req: express.Request, res: express.Response) => {
 };
 
 const addProduct = async (req: express.Request, res: express.Response) => {
-  const data = req.body
+  const data = req.body;
   try {
     jwt.verify(data.token, process.env.TOKEN_SECRET);
   } catch (error) {
     res.status(401);
     res.json(`invalid token ${error}`);
-     return
+    return;
   }
   const orderId: string = req.params.id;
   const productId: string = data.productId;
   const quantity: number = data.quantity;
- 
+
   try {
     const addedProduct = await store.addProduct(quantity, orderId, productId);
     res.json(addedProduct);

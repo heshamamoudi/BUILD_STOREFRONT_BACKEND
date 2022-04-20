@@ -72,10 +72,10 @@ These are the notes from a meeting with the frontend developer that describe wha
 | name        | Character   |not null    |
 
 #### Orders_products join
- id: serialized
- quantity:quantity of the product
- order_id foreign key NOT NULL
- product_id foreign key NOT NULL
+ - id: serialized
+ - quantity:quantity of the product
+ - order_id foreign key NOT NULL
+- product_id foreign key NOT NULL
 
 |           order_products|             |            |
 |-------------|-------------|---------   |
