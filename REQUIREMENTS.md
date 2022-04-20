@@ -63,7 +63,7 @@ These are the notes from a meeting with the frontend developer that describe wha
 - user_id: foreign key NOT NULL,
 - status of order (active or complete): varchar
 
-|           Order                         |
+|           Order|             |            |
 |-------------|-------------|---------   |
 | Column      | type        | null       |
 | ----------- | ----------- |-------     |
