@@ -49,7 +49,7 @@ These are the notes from a meeting with the frontend developer that describe wha
 - lastName:varchar
 - password:varchar
 
-|           User                         |
+|           User|             |            |
 |-----------------------------------     |
 | Column      | type        | null       |
 | ----------- | ----------- |-------     |
@@ -63,7 +63,7 @@ These are the notes from a meeting with the frontend developer that describe wha
 - user_id: foreign key NOT NULL,
 - status of order (active or complete): varchar
 
-|           Order                        |
+|           Order|             |            |
 |-----------------------------------     |
 | Column      | type        | null       |
 | ----------- | ----------- |-------     |
@@ -77,7 +77,7 @@ These are the notes from a meeting with the frontend developer that describe wha
  order_id foreign key NOT NULL
  product_id foreign key NOT NULL
 
-|           order_products                 |
+|           order_products|             |            |
 |-----------------------------------       |
 | Column      | type          | null       |
 | ----------- | -----------   |-------     |
