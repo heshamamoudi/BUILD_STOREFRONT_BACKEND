@@ -11,8 +11,11 @@ download postgresql on your device and create database and user with the corresp
 please refer to --> https://www.postgresql.org/download/linux/.
 
 create database and user with the corresponding name and password:
->name: hesha
->password: 123123
+- database name: hesha
+- user name: hesha
+- user password: 123123
+- command: GRANT ALL PRIVILEGES ON DATABASE hesha TO hesha;
+
 
 ## ports:
 
@@ -29,4 +32,6 @@ create database and user with the corresponding name and password:
 open directory/file in terminal and npm install.
 cd to build_storefront_backend npm install.
 
-
+## run migrations to create tables:
+- db-migrate up
+- npx db-migrate up
