@@ -35,3 +35,15 @@ cd to build_storefront_backend npm install.
 ## run migrations to create tables:
 - db-migrate up
 - npx db-migrate up
+
+## create .env file:
+create environment file and write 
+ -   POSTGRES_HOST = localhost
+ -   POSTGRES_DB = node_js
+ -   POSTGRES_USER = hesha
+ -   POSTGRES_PASSWORD = 123123
+  -  TEST_DB = test_db
+  -  ENV = dev
+  -  BCRYPT_PASSWORD = HESHAM-AMOUDI-CRYPTING
+  -  SALT_ROUND=10
+  -  TOKEN_SECRET=ALOHESHAMamoudi
