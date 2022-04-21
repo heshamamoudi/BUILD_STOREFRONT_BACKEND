@@ -7,7 +7,7 @@
     "start": "tsc && nodemon ./dist/server.js",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
     "tsc": "tsc",
-    "test": "env ENV=test  tsc  && jasmine --config=spec/support/jasmine.json && db-migrate db:drop test_db",
+    "test": "ENV=test  tsc  && jasmine --config=spec/support/jasmine.json ",
     "lint": "eslint --config .eslintrc ./src/**/*.ts",
     "prettier": "prettier --config .prettierrc src/**/*.ts --write"
   },

@@ -15,21 +15,23 @@ const app = express();
 const request = supertest(app);
 describe('Test responses from endpoints', () => {
     let token;
-    describe('endpoint: /users', () => {
-        //     beforeAll(async()=>{
-        //         const response = await request
-        //   .post("/users")
-        //   .send({
-        //     first_name: "hesham",
-        //     last_name: "amoudi",
-        //     password: "hesham123",
-        //   })
-        //   .set("Accept", "application/json");
-        //   token = response.token
-        // })
-        it('gets /', () => __awaiter(void 0, void 0, void 0, function* () {
-            const response = yield request.get('/users', token);
+    it('GET all users', function () {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield request.get('/users');
+            console.log(response.body);
             expect(response.status).toBe(200);
-        }));
+        });
+    });
+    it('Create user', function () {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield request.post('/signup').send({
+                firstname: 'raman',
+                lastname: 'raghav',
+                username: "heshamamoudi",
+                password: 'helloworld123',
+            });
+            console.log(response.body);
+            expect(response.status).toBe(200);
+        });
     });
 });

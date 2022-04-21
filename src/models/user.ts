@@ -11,6 +11,7 @@ export type User = {
 const { BCRYPT_PASSWORD, SALT_ROUND } = process.env;
 
 export class UserStore {
+
   async authenticate(username: string, password: string): Promise<User | null> {
     const conn = await client.connect();
     const sql = 'SELECT password FROM users WHERE username=($1)';
@@ -21,8 +22,6 @@ export class UserStore {
 
     if (result.rows.length) {
       const user = result.rows[0];
-
-      console.log(user);
 
       if (bcrypt.compareSync(password + BCRYPT_PASSWORD, user.password)) {
         return user;
@@ -69,14 +68,14 @@ export class UserStore {
       // @ts-ignore
       const conn = await client.connect();
       const sql =
-        'INSERT INTO users (username, password) VALUES($1, $2) RETURNING *';
+        'INSERT INTO users (first_name,last_name,username, password) VALUES($1, $2,$3,$4) RETURNING *';
 
       const hash = bcrypt.hashSync(
         u.password + BCRYPT_PASSWORD,
         parseInt(SALT_ROUND)
       );
 
-      const result = await conn.query(sql, [u.username, hash]);
+      const result = await conn.query(sql, [u.first_name,u.last_name,u.username, hash]);
       const user = result.rows[0];
 
       conn.release();

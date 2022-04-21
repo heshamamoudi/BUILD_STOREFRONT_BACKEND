@@ -22,7 +22,6 @@ class UserStore {
             console.log(password + BCRYPT_PASSWORD);
             if (result.rows.length) {
                 const user = result.rows[0];
-                console.log(user);
                 if (bcrypt.compareSync(password + BCRYPT_PASSWORD, user.password)) {
                     return user;
                 }
@@ -65,9 +64,9 @@ class UserStore {
             try {
                 // @ts-ignore
                 const conn = yield database_1.default.connect();
-                const sql = 'INSERT INTO users (username, password) VALUES($1, $2) RETURNING *';
+                const sql = 'INSERT INTO users (first_name,last_name,username, password) VALUES($1, $2,$3,$4) RETURNING *';
                 const hash = bcrypt.hashSync(u.password + BCRYPT_PASSWORD, parseInt(SALT_ROUND));
-                const result = yield conn.query(sql, [u.username, hash]);
+                const result = yield conn.query(sql, [u.first_name, u.last_name, u.username, hash]);
                 const user = result.rows[0];
                 conn.release();
                 return user;
