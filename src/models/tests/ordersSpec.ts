@@ -1,7 +1,7 @@
 import { order,orderStore } from "../orders";
 const store = new orderStore();
 
-describe('Test responses from endpoints', (): void => {
+describe('Test responses from order model', (): void => {
   
 
     it('GET all orders', async function ():Promise<void> {

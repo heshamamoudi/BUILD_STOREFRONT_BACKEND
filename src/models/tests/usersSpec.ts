@@ -1,7 +1,7 @@
 import { User,UserStore } from "../user";
 const store = new UserStore();
 
-describe('Test responses from endpoints', (): void => {
+describe('Test responses from user model', (): void => {
     let u:User = {
         first_name:'hesham',
         last_name:'amoudi',

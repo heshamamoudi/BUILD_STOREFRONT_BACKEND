@@ -1,7 +1,7 @@
 import { product,productStore } from "../products";
 const store = new productStore();
 
-describe('Test responses from endpoints', (): void => {
+describe('Test responses from product model', (): void => {
     let p:product = {
         name: "horizon",
         price: '4',
