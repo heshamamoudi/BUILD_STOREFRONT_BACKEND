@@ -15,8 +15,8 @@ describe('Test responses from endpoints', (): void => {
 
       it('Create user', async function ():Promise<void> {
         const response = await request.post('/signup').send({
-          firstname: 'raman',
-          lastname: 'raghav',
+          first_name: 'raman',
+          last_name: 'raghav',
           username:"heshamamoudi",
           password: 'helloworld123',
         });
@@ -24,7 +24,7 @@ describe('Test responses from endpoints', (): void => {
         expect(response.status).toBe(200);
         
       });
-      
+
       it('Create user', async function ():Promise<void> {
         const response = await request.post('/signup').send({
           firstname: 'raman',

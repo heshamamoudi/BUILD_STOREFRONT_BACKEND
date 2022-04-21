@@ -110,7 +110,7 @@ const signin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 //     }
 // }
 const user_routes = (app) => {
-    app.get('/users', index);
+    app.get('/users', exports.authToken, index);
     app.get('/users/:id', exports.authToken, Show);
     app.get('/users/:id/signin', signin);
     app.post('/signup', Create);

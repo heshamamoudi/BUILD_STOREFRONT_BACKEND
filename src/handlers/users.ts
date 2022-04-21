@@ -114,7 +114,7 @@ const signin = async (req: express.Request, res: express.Response) => {
 // }
 
 const user_routes = (app: express.Application) => {
-  app.get('/users', index);
+  app.get('/users',authToken ,index);
   app.get('/users/:id', authToken,Show);
   app.get('/users/:id/signin', signin);
   app.post('/signup', Create);

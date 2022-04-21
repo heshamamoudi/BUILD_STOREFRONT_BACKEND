@@ -10,9 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const supertest = require("supertest");
-const express = require("express");
-const app = express();
-const request = supertest(app);
+const server_1 = require("../../server");
+const request = supertest(server_1.default);
 describe('Test responses from endpoints', () => {
     let token;
     it('GET all users', function () {

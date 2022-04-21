@@ -15,3 +15,4 @@ app.use(bodyParser.json());
 app.listen(5000, function () {
     console.log(`starting app on: ${address}`);
 });
+exports.default = app;
