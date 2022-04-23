@@ -1,6 +1,7 @@
 import * as express from 'express';
 import { product, productStore } from '../models/products';
 import * as jwt from 'jsonwebtoken';
+import { authToken } from '../middleware/tokenAuth';
 
 const store = new productStore();
 
@@ -16,9 +17,15 @@ const index = async (req: express.Request, res: express.Response) => {
 };
 
 const Show = async (req: express.Request, res: express.Response) => {
-  const id: number = parseInt(req.params.id);
+  try{
+ const id: number = parseInt(req.params.id);
   const product = await store.show(id);
   res.json(product);
+  }catch (error) {
+    res.status(400);
+    res.json(error);
+  }
+ 
 };
 
 const Create = async (req: express.Request, res: express.Response) => {
@@ -70,7 +77,7 @@ const Create = async (req: express.Request, res: express.Response) => {
 const products_routes = (app: express.Application) => {
   app.get('/products', index);
   app.get('/products/:id', Show);
-  app.post('/product', Create);
+  app.post('/product',authToken, Create);
   // app.put('/products/:id', Update)
   // app.delete('/products/:id', Delete);
 };

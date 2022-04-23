@@ -1,6 +1,5 @@
 import * as express from 'express';
 import { orderStore, order } from '../models/orders';
-import * as jwt from 'jsonwebtoken';
 import { authToken } from '../middleware/tokenAuth';
 
 const store = new orderStore();
@@ -74,7 +73,6 @@ const order_routes = (app: express.Application) => {
   app.get('/orders', index);
   app.get('/orders/:id', Show);
   app.post('/order',authToken, Create);
-  app.post('/orders_completed', Create);
   app.post('/orders/:id/products',authToken, addProduct);
   // // app.put('/order/:id', put)
   // app.delete('/orders/:id', Delete);
