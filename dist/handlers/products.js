@@ -13,8 +13,14 @@ const products_1 = require("../models/products");
 const jwt = require("jsonwebtoken");
 const store = new products_1.productStore();
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const products = yield store.index();
-    res.json(products);
+    try {
+        const products = yield store.index();
+        res.json(products);
+    }
+    catch (error) {
+        res.status(400);
+        res.json(error);
+    }
 });
 const Show = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = parseInt(req.params.id);

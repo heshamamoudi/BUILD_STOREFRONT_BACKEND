@@ -77,7 +77,7 @@ class orderStore {
     update(status, id) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const sql = `UPDATE orders set status=$1  WHERE id=$2`;
+                const sql = `UPDATE orders set status=$1  WHERE id=$2 RETURNING * ;`;
                 // @ts-ignore
                 const conn = yield database_1.default.connect();
                 const result = yield conn.query(sql, [status, id]);

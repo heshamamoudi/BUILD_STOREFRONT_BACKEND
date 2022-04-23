@@ -5,6 +5,7 @@ export type order = {
   id?: number;
   status: string;
   user_id: string;
+  product_id?:number
 };
 
 export class orderStore {
@@ -77,7 +78,7 @@ export class orderStore {
   }
   async update(status: string, id: string): Promise<order> {
     try {
-      const sql = `UPDATE orders set status=$1  WHERE id=$2`;
+      const sql = `UPDATE orders set status=$1  WHERE id=$2 RETURNING * ;`;
       // @ts-ignore
       const conn = await client.connect();
 

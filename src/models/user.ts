@@ -12,18 +12,18 @@ const { BCRYPT_PASSWORD, SALT_ROUND } = process.env;
 
 export class UserStore {
 
-  async authenticate(username: string, password: string): Promise<User | null> {
+  async authenticate(user:User): Promise<User | null> {
     const conn = await client.connect();
     const sql = 'SELECT password FROM users WHERE username=($1)';
 
-    const result = await conn.query(sql, [username]);
+    const result = await conn.query(sql, [user.username]);
 
-    console.log(password + BCRYPT_PASSWORD);
+
 
     if (result.rows.length) {
-      const user = result.rows[0];
+      const userOutcome = result.rows[0];
 
-      if (bcrypt.compareSync(password + BCRYPT_PASSWORD, user.password)) {
+      if (bcrypt.compareSync(user.password + BCRYPT_PASSWORD, userOutcome.password)) {
         return user;
       }
     }
@@ -109,7 +109,7 @@ export class UserStore {
     id: number
   ): Promise<User> {
     try {
-      const sql = `UPDATE users set first_name=$1 , last_name=$2 WHERE id=$3`;
+      const sql = `UPDATE users set first_name=$1 , last_name=$2 WHERE id=$3 RETURNING *;`;
       // @ts-ignore
       const conn = await client.connect();
 

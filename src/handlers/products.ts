@@ -5,8 +5,14 @@ import * as jwt from 'jsonwebtoken';
 const store = new productStore();
 
 const index = async (req: express.Request, res: express.Response) => {
-  const products = await store.index();
-  res.json(products);
+  try {
+    const products = await store.index();
+    res.json(products);
+  } catch (error) {
+    res.status(400);
+    res.json(error);
+  }
+ 
 };
 
 const Show = async (req: express.Request, res: express.Response) => {

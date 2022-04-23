@@ -1,1 +1,2 @@
-/* Replace with your SQL commands */
+DROP DATABASE node_js;
+DROP DATABASE test_db;

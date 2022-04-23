@@ -1,35 +1,26 @@
 import * as express from 'express';
 import { User, UserStore } from '../models/user';
 import * as jwt from 'jsonwebtoken';
+import { authToken } from '../middleware/tokenAuth';
 const store = new UserStore();
 
 
-export const authToken = (req: express.Request,res: express.Response,next: express.NextFunction):
- void => {
-  try {
-    const authorizationHeader: string = req.headers.authorization as string;
-    const token: string = authorizationHeader.split(' ')[1];
-    jwt.verify(token, process.env.TOKEN_SECRET as string);
-    next();
-    return
-  } catch (error) {
-    res.status(401);
-  }
-};
+
 
 
 
 const index = async (req: express.Request, res: express.Response) => {
-  try { 
-     const user = await store.index();
-      res.json(user);
-  } catch (err) {
+  try {
+     const users = await store.index();
+    res.json(users);
+  } catch (error) {
     res.status(400);
-    res.json(err);
-    
+    res.json(`invalid token ${error}`);
   }
-
+ 
 };
+
+
 
 const Show = async (req: express.Request, res: express.Response) => {
   try {
@@ -55,24 +46,26 @@ const Create = async (req: express.Request, res: express.Response) => {
   try {
     const newUser = await store.create(user);
     var token = jwt.sign({ user: newUser }, process.env.TOKEN_SECRET);
-
     res.json(token);
   } catch (err) {
     res.status(400);
-    res.json(err + user);
+    res.json(err + user)
   }
 };
 
 const signin = async (req: express.Request, res: express.Response) => {
-  let data = req.body;
-  const id: string = req.params.id
-  const password: string = data.password as string;
-
+ let data = req.body;
+    const userinput:User={
+      username:data.username ,
+      password:data.password
+    }
+  
   try {
-    const user = await store.authenticate(id, password);
+    
+    const user = await store.authenticate(userinput);
     switch(true){
       case  (user !== null):
-      const token = jwt.sign(id, process.env.TOKEN_SECRET);
+      const token = jwt.sign(user, process.env.TOKEN_SECRET);
       res.json(token);
       break;
       case  (user === null):
@@ -116,7 +109,7 @@ const signin = async (req: express.Request, res: express.Response) => {
 const user_routes = (app: express.Application) => {
   app.get('/users',authToken ,index);
   app.get('/users/:id', authToken,Show);
-  app.get('/users/:id/signin', signin);
+  app.post('/users/:id/signin', signin);
   app.post('/signup', Create);
   // app.put('/users/:id', Update)
   // app.delete('/users/:id',Delete)

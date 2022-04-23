@@ -9,31 +9,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.authToken = void 0;
 const user_1 = require("../models/user");
 const jwt = require("jsonwebtoken");
+const tokenAuth_1 = require("../middleware/tokenAuth");
 const store = new user_1.UserStore();
-const authToken = (req, res, next) => {
-    try {
-        const authorizationHeader = req.headers.authorization;
-        const token = authorizationHeader.split(' ')[1];
-        jwt.verify(token, process.env.TOKEN_SECRET);
-        next();
-        return;
-    }
-    catch (error) {
-        res.status(401);
-    }
-};
-exports.authToken = authToken;
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield store.index();
-        res.json(user);
+        const users = yield store.index();
+        res.json(users);
     }
-    catch (err) {
+    catch (error) {
         res.status(400);
-        res.json(err);
+        res.json(`invalid token ${error}`);
     }
 });
 const Show = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -67,12 +54,13 @@ const Create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 const signin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let data = req.body;
     const id = req.params.id;
+    const username = data.username;
     const password = data.password;
     try {
         const user = yield store.authenticate(id, password);
         switch (true) {
             case (user !== null):
-                const token = jwt.sign(id, process.env.TOKEN_SECRET);
+                const token = jwt.sign(user, process.env.TOKEN_SECRET);
                 res.json(token);
                 break;
             case (user === null):
@@ -110,8 +98,8 @@ const signin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 //     }
 // }
 const user_routes = (app) => {
-    app.get('/users', exports.authToken, index);
-    app.get('/users/:id', exports.authToken, Show);
+    app.get('/users', tokenAuth_1.authToken, index);
+    app.get('/users/:id', tokenAuth_1.authToken, Show);
     app.get('/users/:id/signin', signin);
     app.post('/signup', Create);
     // app.put('/users/:id', Update)

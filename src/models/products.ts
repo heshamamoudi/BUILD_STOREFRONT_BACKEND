@@ -4,7 +4,8 @@ import client from '../database';
 export type product = {
   id?: number;
   name: string;
-  price: string;
+  price: number;
+  category?:string
 };
 
 export class productStore {
@@ -77,7 +78,7 @@ export class productStore {
   }
   async update(name: string, price: number, id: number): Promise<product> {
     try {
-      const sql = `UPDATE products set name=$1 ,price=$2 WHERE id=$3`;
+      const sql = `UPDATE products set name=$1 ,price=$2 WHERE id=$3 RETURNING *;`;
       // @ts-ignore
       const conn = await client.connect();
 

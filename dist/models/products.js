@@ -77,7 +77,7 @@ class productStore {
     update(name, price, id) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const sql = `UPDATE products set name=$1 ,price=$2 WHERE id=$3`;
+                const sql = `UPDATE products set name=$1 ,price=$2 WHERE id=$3 RETURNING *;`;
                 // @ts-ignore
                 const conn = yield database_1.default.connect();
                 const result = yield conn.query(sql, [name, price, id]);

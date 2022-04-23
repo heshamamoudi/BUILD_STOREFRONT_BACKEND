@@ -1,44 +1,35 @@
 import * as express from 'express';
 import { orderStore, order } from '../models/orders';
 import * as jwt from 'jsonwebtoken';
+import { authToken } from '../middleware/tokenAuth';
 
 const store = new orderStore();
 
 const index = async (req: express.Request, res: express.Response) => {
-  const data = req.body;
   try {
-    jwt.verify(data.token, process.env.TOKEN_SECRET);
-  } catch (error) {
-    res.status(401);
-    res.json(`invalid token ${error}`);
-    return;
-  }
-  const order = await store.index();
+    const order = await store.index();
   res.json(order);
+  } catch (error) {
+    res.status(400);
+    res.json(`invalid token ${error}`);
+  }
+  
 };
 
 const Show = async (req: express.Request, res: express.Response) => {
-  const data = req.body;
+  
   try {
-    jwt.verify(data.token, process.env.TOKEN_SECRET);
+    const order = await store.show(req.params.id);
+    res.json(order);
   } catch (error) {
-    res.status(401);
+    res.status(400);
     res.json(`invalid token ${error}`);
-    return;
   }
-  const order = await store.show(req.params.id);
-  res.json(order);
+  
 };
 
 const Create = async (req: express.Request, res: express.Response) => {
   const data = req.body;
-  try {
-    jwt.verify(data.token, process.env.TOKEN_SECRET);
-  } catch (error) {
-    res.status(401);
-    res.json(`invalid token ${error}`);
-    return;
-  }
   const order: order = {
     status: data.status,
     user_id: data.user_id
@@ -54,17 +45,9 @@ const Create = async (req: express.Request, res: express.Response) => {
 
 const addProduct = async (req: express.Request, res: express.Response) => {
   const data = req.body;
-  try {
-    jwt.verify(data.token, process.env.TOKEN_SECRET);
-  } catch (error) {
-    res.status(401);
-    res.json(`invalid token ${error}`);
-    return;
-  }
   const orderId: string = req.params.id;
   const productId: string = data.productId;
   const quantity: number = data.quantity;
-
   try {
     const addedProduct = await store.addProduct(quantity, orderId, productId);
     res.json(addedProduct);
@@ -90,9 +73,9 @@ const addProduct = async (req: express.Request, res: express.Response) => {
 const order_routes = (app: express.Application) => {
   app.get('/orders', index);
   app.get('/orders/:id', Show);
-  app.post('/order', Create);
+  app.post('/order',authToken, Create);
   app.post('/orders_completed', Create);
-  app.post('/orders/:id/products', addProduct);
+  app.post('/orders/:id/products',authToken, addProduct);
   // // app.put('/order/:id', put)
   // app.delete('/orders/:id', Delete);
 };

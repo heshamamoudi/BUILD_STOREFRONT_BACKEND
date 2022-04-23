@@ -95,7 +95,7 @@ class UserStore {
     update(first_name, last_name, id) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const sql = `UPDATE users set first_name=$1 , last_name=$2 WHERE id=$3`;
+                const sql = `UPDATE users set first_name=$1 , last_name=$2 WHERE id=$3 RETURNING *;`;
                 // @ts-ignore
                 const conn = yield database_1.default.connect();
                 const result = yield conn.query(sql, [first_name, last_name, id]);
