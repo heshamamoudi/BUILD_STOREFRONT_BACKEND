@@ -80,7 +80,7 @@ describe('Test responses from product endpoints', (): void => {
   });
 
 
-
+// NEED HELP in this
   describe('Test responses from order endpoints', (): void => {
 
     it('Create order', async function ():Promise<void> {
@@ -104,6 +104,8 @@ describe('Test responses from product endpoints', (): void => {
         expect(response.status).toBe(200);
       });
 
+
+      // NEED HELP in this
       it('add product to order', async function ():Promise<void> {
         const response: supertest.Response = await request.set('Authorization', 'Bearer ' + TEST_TOKEN).post('/orders/1/products').send({
           quants:22,
