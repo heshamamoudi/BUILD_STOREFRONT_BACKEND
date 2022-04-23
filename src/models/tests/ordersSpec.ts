@@ -2,6 +2,7 @@ import { order, orderStore } from "../orders";
 const store = new orderStore();
 
 describe('Test responses from order model', (): void => {
+  // before failing making everything fail with it
   let order:order;
   beforeAll(async function():Promise<void>{
     const response = await store.create({

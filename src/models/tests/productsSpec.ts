@@ -2,6 +2,7 @@ import { product,productStore } from "../products";
 const store = new productStore();
 
 describe('Test responses from product model', (): void => {
+  // before failing making everything fail with it
   let product:product;
   beforeAll(async function():Promise<void>{
     try{

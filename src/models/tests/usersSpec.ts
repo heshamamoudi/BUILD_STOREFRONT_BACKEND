@@ -2,6 +2,7 @@ import { User,UserStore } from "../user";
 const store = new UserStore();
 
 describe('Test responses from user model', (): void => {
+  // before failing making everything fail with it
   let user:User;
   beforeAll(async function():Promise<void>{
     try {
