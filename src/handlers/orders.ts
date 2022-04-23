@@ -70,8 +70,8 @@ const addProduct = async (req: express.Request, res: express.Response) => {
 // };
 
 const order_routes = (app: express.Application) => {
-  app.get('/orders', index);
-  app.get('/orders/:id', Show);
+  app.get('/orders',authToken, index);
+  // app.get('/orders/:id', Show);
   app.post('/order',authToken, Create);
   app.post('/orders/:id/products',authToken, addProduct);
   // // app.put('/order/:id', put)
