@@ -21,7 +21,7 @@ These are the notes from a meeting with the frontend developer that describe wha
 #### Orders
 - Current Order by user (args: user id)[token required] : url: localhost:5000/orders
 - Create :[token required] : url: localhost:5000/order
--add product :[token required] : url: localhost:5000/orders/:id/products 
+- add product :[token required] : url: localhost:5000/orders/:id/products 
 - [OPTIONAL] Completed Orders by user (args: user id)[token required] url: localhost:5000//orders_completed
 
 
